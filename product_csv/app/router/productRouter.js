@@ -36,6 +36,7 @@ router.get('/search/product',productController.searchData)
 router.get('/category/product',productController.categoryData)
 router.get('/price/product',productController.priceData)
 router.delete('/delete/product/:id',productController.deleteData)
+router.get('/export/product',productController.generatePDF)
 
 
 module.exports=router;

@@ -1,5 +1,10 @@
 const csv = require("csvtojson");
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 const productModel = require("../models/productModel");
+
+
+
 class ProductController {
   async createData(req, res) {
     try {
@@ -155,6 +160,31 @@ class ProductController {
         message: "product deleted successfully",
         data: data,
       });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+
+
+
+
+  async generatePDF(req, res) {
+    try {
+    const products = await productModel.find();
+    const doc = new PDFDocument();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename=product-list.pdf');
+    doc.pipe(res);
+    doc.font("Times-Roman").fontSize(18).text("Product List", { align: "center" });
+    doc.moveDown();
+    products.forEach((item, i) => {
+      doc.font("Helvetica").fontSize(14).text(i + 1 + "." + item.productName + " : " + item.price);
+    });
+
+    doc.end();
     } catch (error) {
       return res.status(500).json({
         success: false,
