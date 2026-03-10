@@ -9,8 +9,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const employeeRoute = require('./app/routes/employeeRoute')
 app.use('/api/v1', employeeRoute)
-const productRoute = require('./app/routes/productRoute')
-app.use('/api/v1', productRoute)
+const salaryRoute = require('./app/routes/empSalaryRoute')
+app.use('/api/v1', salaryRoute)
 
 
 
