@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const Admin = require('./app/model/admin.model');
+const Admin = require('./app/models/adminModel');
 
 async function seed() {
     try {
@@ -17,7 +17,7 @@ async function seed() {
         const password = await bcrypt.hash('Admin@12345', 10);
         await Admin.create({ name: 'Super Admin', email: 'admin@company.com', password });
 
-        console.log('✅ Admin seeded successfully');
+        console.log('Admin seeded successfully');
         console.log('   Email   : admin@company.com');
         console.log('   Password: Admin@12345');
         process.exit(0);
