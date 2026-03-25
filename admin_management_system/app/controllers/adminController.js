@@ -52,17 +52,14 @@ class AdminController {
         password: hashedPassword,
       });
 
-      await sendCredentials({
-        name,
-        email,
-        employeeId,
-        password: plainPassword,
-      });
+      // Send email in the background — don't block the response
+      sendCredentials({ name, email, employeeId, password: plainPassword })
+        .catch((err) => console.error("Email send failed:", err.message));
 
       res
         .status(201)
         .json({
-          message: "Employee created and credentials sent",
+          message: "Employee created successfully. Credentials sent via email.",
           employeeId: employee.employeeId,
         });
     } catch (err) {
