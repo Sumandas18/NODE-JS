@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Lookup UI</title>
+
+<!-- Modern Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-color: #0B0E14;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --primary: #A78BFA;
+    --secondary: #818CF8;
+    --accent: #F472B6;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --input-bg: rgba(0, 0, 0, 0.2);
+    --gradient-btn: linear-gradient(135deg, var(--primary), var(--secondary));
+    --gradient-text: linear-gradient(to right, var(--primary), var(--accent));
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Glowing Orbs */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.4;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+body::before {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+}
+
+body::after {
+    bottom: -10%;
+    right: -10%;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    animation-delay: -10s;
+}
+
+@keyframes drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Header */
+.header-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.header-wrapper h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.header-wrapper p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Container */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Forms Grid */
+.forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-card h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.glass-card h2::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 24px;
+    background: var(--gradient-btn);
+    border-radius: 4px;
+}
+
+/* Forms */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.form-group:focus-within label {
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.form-control::placeholder {
+    color: #475569;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+select.form-control option {
+    background: var(--bg-color);
+    color: var(--text-main);
+}
+
+/* Custom Radio Buttons */
+.size-selector {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.size-option {
+    position: relative;
+}
+
+.size-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+}
+
+.size-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.size-option input[type="radio"]:checked + .size-label {
+    background: var(--gradient-btn);
+    color: white;
+    border-color: transparent;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.4);
+}
+
+.size-label:hover {
+    border-color: var(--secondary);
+    color: var(--text-main);
+}
+
+/* Button */
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: var(--gradient-btn);
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(167, 139, 250, 0.4);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+/* Data Table Section */
+.data-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.data-header h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.filter-wrapper label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.filter-wrapper .form-control {
+    width: 180px;
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
+/* Table */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th {
+    padding: 20px;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--card-border);
+    background: rgba(0,0,0,0.2);
+}
+
+td {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: var(--text-main);
+    font-weight: 400;
+    transition: background 0.3s;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: rgba(167, 139, 250, 0.15);
+    color: var(--primary);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.price-tag {
+    font-weight: 600;
+    color: #10B981;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px !important;
+    color: var(--text-muted);
+}
+
+.empty-state-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .data-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .filter-wrapper {
+        width: 100%;
+    }
+    .filter-wrapper .form-control {
+        width: 100%;
+        flex: 1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header-wrapper">
+    <h1>Inventory Management</h1>
+    <p>Manage categories and products seamlessly.</p>
+</div>
+
+<div class="main-container">
+
+    <div class="forms-grid">
+
+        <!-- Category Form -->
+        <div class="glass-card">
+            <h2>New Category</h2>
+            <form id="categoryForm">
+                <div class="form-group">
+                    <label for="categoryName">Category Name</label>
+                    <input type="text" id="categoryName" class="form-control" placeholder="e.g. Footwear" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Category</button>
+            </form>
+        </div>
+
+        <!-- Product Form -->
+        <div class="glass-card">
+            <h2>Add Product</h2>
+            <form id="productForm">
+                
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" class="form-control" placeholder="e.g. Running Shoes" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productPrice">Price</label>
+                    <input type="number" id="productPrice" class="form-control" placeholder="0.00" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="categoryId">Category</label>
+                    <select id="categoryId" class="form-control" required>
+                        <option value="" disabled selected>Select a category...</option>
+                        <% categories.forEach(function(cat) { %>
+                            <option value="<%= cat._id %>"><%= cat.categoryName %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Available Size</label>
+                    <div class="size-selector">
+                        <label class="size-option">
+                            <input type="radio" name="productSize" value="S">
+                            <span class="size-label">S</span>
+                        </label>
+                        <label class="size-option">
+                            <input type="radio" name="productSize" value="M">
+                            <span class="size-label">M</span>
+                        </label>
+                        <label class="size-option">
+                            <input type="radio" name="productSize" value="L">
+                            <span class="size-label">L</span>
+                        </label>
+                        <label class="size-option">
+                            <input type="radio" name="productSize" value="XL">
+                            <span class="size-label">XL</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save Product</button>
+                
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Data Table Section -->
+    <div class="data-section">
+        <div class="data-header">
+            <h2>Product Catalog</h2>
+            <div class="filter-wrapper">
+                <label for="categoryFilter">Filter by:</label>
+                <select id="categoryFilter" class="form-control">
+                    <option value="all">All Categories</option>
+                    <% categories.forEach(function(cat) { %>
+                        <option value="<%= cat.categoryName %>"><%= cat.categoryName %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th width="8%">ID</th>
+                        <th width="20%">Category</th>
+                        <th width="42%">Product Name</th>
+                        <th width="15%">Price</th>
+                        <th width="15%">Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% products.forEach(function(prod, index) { %>
+                        <tr data-category="<%= prod.category ? prod.category.categoryName : '' %>">
+                            <td style="color: var(--text-muted);">#<%= String(index + 1).padStart(3, '0') %></td>
+                            <td><span class="badge"><%= prod.category ? prod.category.categoryName : 'Uncategorized' %></span></td>
+                            <td style="font-weight: 500;"><%= prod.productName %></td>
+                            <td class="price-tag"><%= prod.productPrice %></td>
+                            <td>
+                                <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600;">
+                                    <%= prod.productSize %>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }); %>
+                    
+                    <% if(products.length === 0) { %>
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <div class="empty-state-icon">📦</div>
+                                <div>No products available in the catalog</div>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const originalText = btn.innerText;
+    btn.innerText = 'Creating...';
+    btn.style.opacity = '0.7';
+
+    const categoryName = document.getElementById('categoryName').value;
+    
+    try {
+        const res = await fetch('/category/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ categoryName })
+        });
+        
+        if(res.ok) {
+            window.location.reload();
+        } else {
+            alert('Failed to create category. Please try again.');
+            btn.innerText = originalText;
+            btn.style.opacity = '1';
+        }
+    } catch (err) {
+        console.error(err);
+        alert('An error occurred.');
+        btn.innerText = originalText;
+        btn.style.opacity = '1';
+    }
+});
+
+document.getElementById('productForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const categoryId = document.getElementById('categoryId').value;
+    const size = document.querySelector('input[name="productSize"]:checked');
+    
+    if(!size) {
+        alert('Please select a product size before submitting.');
+        return;
+    }
+    
+    const btn = e.target.querySelector('button');
+    const originalText = btn.innerText;
+    btn.innerText = 'Saving...';
+    btn.style.opacity = '0.7';
+
+    try {
+        const res = await fetch('/product/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                productName,
+                productPrice,
+                categoryId,
+                productSize: size.value
+            })
+        });
+        
+        if(res.ok) {
+            window.location.reload();
+        } else {
+            alert('Failed to save product. Please try again.');
+            btn.innerText = originalText;
+            btn.style.opacity = '1';
+        }
+    } catch (err) {
+        console.error(err);
+        alert('An error occurred.');
+        btn.innerText = originalText;
+        btn.style.opacity = '1';
+    }
+});
+
+document.getElementById('categoryFilter').addEventListener('change', function() {
+    const value = this.value;
+    const rows = document.querySelectorAll('#productTable tbody tr');
+
+    rows.forEach(row => {
+        // Skip empty state row if present
+        if(row.querySelector('.empty-state')) return;
+
+        const cat = row.getAttribute('data-category');
+        if (value === 'all' || cat === value) {
+            row.style.display = '';
+            // Add a slight fade-in animation
+            row.style.animation = 'fadeIn 0.3s ease forwards';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+</script>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+</body>
+</html>

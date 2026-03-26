@@ -33,9 +33,10 @@ app.use(express.urlencoded());
 app.use(indexRoute);
 
 const port = 4005;
-app.listen(port, (err) => {
-    if (err) {
+app.listen(port, (error) => {
+    if (error) {
         console.log("Server stopped");
+        
     }
     else {
         console.log("Server is running on port", port);

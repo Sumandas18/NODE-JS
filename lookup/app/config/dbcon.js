@@ -4,18 +4,20 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const MONGO_URL = process.env.MONGO_URL
 
-const dbConfig = async()=>{
+const DbConfig = async () => {
     try {
-        const connect = await mongoose.connect(MONGO_URL);
-        if(connect){
+        const response = mongoose.connect(MONGO_URL);
+
+        if (response) {
             console.log('Connection established');
         }
-        else{
+        else {
             console.log('Connection failed');
         }
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
+    }
+    catch (err) {
+        console.log('Connection failed');
     }
 }
 
-module.exports = dbConfig;
+module.exports = DbConfig;

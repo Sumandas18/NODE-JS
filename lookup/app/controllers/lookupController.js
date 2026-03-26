@@ -26,6 +26,26 @@ class LookupController {
     }
   }
 
+  async indexPage(req, res) {
+    try {
+      const categories = await Category.find();
+      const products = await Product.find().populate('categoryId');
+      const productsWithCategory = products.map((p) => {
+        const product = p.toObject();
+        product.category = p.categoryId || null;
+        return product;
+      });
+
+      return res.render('index', {
+        categories,
+        products: productsWithCategory,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send('Server error');
+    }
+  }
+
   async CreateProduct(req, res) {
     try {
       const { productName, categoryId, productPrice, productSize } = req.body;
