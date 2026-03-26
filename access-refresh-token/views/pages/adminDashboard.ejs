@@ -1,0 +1,53 @@
+<%- include("./../layout/header") %>
+
+    <%- include("./../layout/navbar") %>
+
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h3 class="page-title mb-0"><i class="fa-solid fa-users-gear me-2" style="color: #818cf8;"></i>Admin <span>Dashboard</span></h3>
+            <span style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc; padding: 0.3rem 0.85rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600;">
+                <%= users.length %> Users
+            </span>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header">
+                <i class="fa-solid fa-list me-2"></i>User Listing
+            </div>
+
+            <div class="table-responsive p-3">
+                <table class="table table-hover table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((u, i) => { %>
+                            <tr>
+                                <td style="color: rgba(255,255,255,0.35); font-size: 0.82rem;"><%= i + 1 %></td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: #fff; flex-shrink: 0;">
+                                            <%= u.name.charAt(0).toUpperCase() %>
+                                        </div>
+                                        <%= u.name %>
+                                    </div>
+                                </td>
+                                <td style="color: rgba(255,255,255,0.65); font-size: 0.9rem;"><%= u.email %></td>
+                                <td>
+                                    <span class="badge-role"><%= u.role %></span>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <%- include("./../layout/footer") %>

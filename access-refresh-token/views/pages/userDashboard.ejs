@@ -1,0 +1,39 @@
+<%- include("./../layout/header") %>
+
+    <%- include("./../layout/navbar") %>
+
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="glass-card p-4 p-md-5" style="width: 100%; max-width: 440px;">
+
+            <!-- Avatar -->
+            <div class="text-center mb-4">
+                <div style="width: 72px; height: 72px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.8rem; font-weight: 700; color: #fff; letter-spacing: -1px;">
+                    <%= user.name.charAt(0).toUpperCase() %>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 700; color: #f1f5f9; margin-bottom: 2px;">My Profile</h4>
+                <p style="color: rgba(255,255,255,0.4); font-size: 0.82rem; margin: 0;">Account information</p>
+            </div>
+
+            <hr class="profile-divider mb-4">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <p class="profile-label"><i class="fa-solid fa-user me-1"></i> Name</p>
+                <p class="profile-value"><%= user.name %></p>
+            </div>
+
+            <hr class="profile-divider mb-3">
+
+            <!-- Email -->
+            <div class="mb-4">
+                <p class="profile-label"><i class="fa-solid fa-envelope me-1"></i> Email</p>
+                <p class="profile-value"><%= user.email %></p>
+            </div>
+
+            <div class="info-notice">
+                <i class="fa-solid fa-circle-info me-2"></i>Profile details are read-only
+            </div>
+        </div>
+    </div>
+
+    <%- include("./../layout/footer") %>

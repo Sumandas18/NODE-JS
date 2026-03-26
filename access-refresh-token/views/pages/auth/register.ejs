@@ -1,0 +1,55 @@
+<%- include("./../../layout/header") %>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="glass-card p-4 p-md-5" style="width: 100%; max-width: 420px;">
+
+        <!-- Logo / Brand -->
+        <div class="text-center mb-4">
+            <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <i class="fa-solid fa-user-plus" style="color: #fff; font-size: 1.3rem;"></i>
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #f1f5f9; margin-bottom: 4px;">Create Account</h3>
+            <p style="color: rgba(255,255,255,0.45); font-size: 0.88rem; margin: 0;">Join us today — it's free</p>
+        </div>
+
+        <form action="/auth/register" method="post">
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-user" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.85rem;"></i>
+                    <input class="form-control custom-input" type="text" name="name" required placeholder="John Doe" style="padding-left: 2.4rem !important;">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-envelope" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.85rem;"></i>
+                    <input class="form-control custom-input" type="email" name="email" required placeholder="name@example.com" style="padding-left: 2.4rem !important;">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-key" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.85rem;"></i>
+                    <input class="form-control custom-input" type="password" name="password" required placeholder="••••••••" style="padding-left: 2.4rem !important;">
+                </div>
+            </div>
+
+            <button type="submit" class="btn w-100 custom-btn">
+                <span><i class="fa-solid fa-user-check me-2"></i>Create Account</span>
+            </button>
+        </form>
+
+        <div class="text-center mt-4">
+            <p style="color: rgba(255,255,255,0.4); font-size: 0.85rem; margin: 0;">
+                Already have an account?
+                <a href="/auth/view/login" class="auth-link ms-1">Login here</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<%- include("./../../layout/footer") %>
+
