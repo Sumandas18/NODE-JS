@@ -12,7 +12,6 @@ const authCheck=async(req,res,next)=>{
     try{
         const decoded=jwt.verify(token,process.env.JWT_SECRET_KEY);
         req.user=decoded;
-        //console.log('afterlogin user',req.user);
     }catch(err){
         return res.status(400).json({
             status:false,

@@ -113,7 +113,7 @@ class AdminController {
       });
 
       res.json({
-        message: "Password reset and new credentials sent to employee",
+        message: "Password reset and new credentials sent to employee email id",
       });
     } catch (err) {
       res.status(500).json({ message: err.message });
